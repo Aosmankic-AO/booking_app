@@ -1,5 +1,5 @@
 import express from "express";
-import { createHotel, deleteHotel, getAllHotels, getHotels, updateHotel } from "../controllers/hotel.js";
+import { countByCity, createHotel, deleteHotel, getAllHotels, getHotels, updateHotel } from "../controllers/hotel.js";
 import Hotel from "../models/Hotel.js";
 import { createError } from "../utils/error.js";
 import { verifyAdmin } from "../utils/verifyToken.js";
@@ -16,7 +16,10 @@ router.delete("/:id", verifyAdmin, deleteHotel);
 
 /** No verification needed for getting */
 //GET using get and find by id
-router.get("/:id", getHotels);
+router.get("/find/:id", getHotels);
+router.get("/countByCity", countByCity);
+router.get("/countByType", getHotels);
+
 //GET ALL using get all, :id not needed since selecting all
 router.get("/", getAllHotels);
 

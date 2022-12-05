@@ -7,7 +7,7 @@ export const createHotel = async (req,res,next)=>{
     try {
         const savedHotel = await newHotel.save()
         res.status(200).json(savedHotel)
-    } catch (error) {
+    } catch (err) {
         next(err);
     }
 }
@@ -53,14 +53,34 @@ export const getHotels = async (req,res,next)=>{
 
 // GET ALL HOTELS
 export const getAllHotels = async (req,res,next)=>{
-    const failed = true;
-
-    if (failed) return next(createError(401, "You are not authenticated."));
-
     try {
         const hotels = await Hotel.find();
-        res.status(200).json(hotels)
+        res.status(200).json(hotels);
     } catch (err) {
         next(err)
     }
 }
+
+//  COUNT HOTELS BY CITY
+export const countByCity = async (req,res,next)=>{
+    // Turn cities into array, split by commas
+    const cities = req.query.cities.split(",")
+    try {
+        const list = await Promise.all(cities.map(city=>{
+            return Hotel.countDocuments({city:city})
+        }))
+        res.status(200).json(list);
+    } catch (err) {
+        next(err)
+    }
+}
+
+//  COUNT HOTELS BY TYPE
+// export const countByCity = async (req,res,next)=>{
+//     try {
+//         const hotels = await Hotel.find();
+//         res.status(200).json(hotels);
+//     } catch (err) {
+//         next(err)
+//     }
+// }

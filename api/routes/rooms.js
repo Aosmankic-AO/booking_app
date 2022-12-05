@@ -10,7 +10,7 @@ router.post("/:hotelid", verifyAdmin, createRoom);
 //UPDATE using put and find by id and update
 router.put("/:id", verifyAdmin, updateRoom);
 //DELETE using delete and find by id and delete
-router.delete("/:id", verifyAdmin, deleteRoom);
+router.delete("/:id/:hotelid", verifyAdmin, deleteRoom);
 
 /** No verification needed for getting */
 //GET using get and find by id
